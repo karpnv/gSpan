@@ -269,7 +269,7 @@ class gSpan(object):
 
     @record_timestamp
     def run(self):
-        self.read_graphs()
+        #self.read_graphs()
         self.generate_1edge_frequent_subgraphs()
         if self.max_num_vertices < 2:
             return
@@ -305,10 +305,14 @@ class gSpan(object):
         print('\nSupport: {}'.format(self.support))
 
         ######Add some report info to pandas dataframe "self.report_df"#####
+        max_eg=max([tupl[0] for tupl in g.set_of_elb[1]])
+        # print(g.set_of_elb)
+        # print(g.set_of_elb[1])
         self.report_df = self.report_df.append(pd.DataFrame(
             {'support': [self.support],
              'description': [display_str],
-             'num_vert': self.DFScode.get_num_vertices()},
+             'num_vert': self.DFScode.get_num_vertices(),#},
+             'max_eg_vert': max_eg},
             index=[int(repr(self.counter)[6:-1])]))
         if self.visualize:
             g.plot()
